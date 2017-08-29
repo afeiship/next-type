@@ -5,6 +5,8 @@
   var class2type = {};
   var toString = class2type.toString;
   var javascriptType = 'Boolean Number String Function Array Date RegExp Object Error';
+  var FUNCTION = 'function';
+  var OBJECT = 'object';
 
   //populate class2type map:
   javascriptType.split(' ').forEach(function (inName) {
@@ -12,11 +14,11 @@
   });
 
   nx.type = function (inObj) {
-    if (inObj && nx.isFunction(inObj.type)) {
+    if (inObj && typeof(inObj.type) === FUNCTION) {
       return inObj.type();
     }
-    return inObj == null ? String(inObj) :
-      class2type[toString.call(inObj)] || 'object';
+    return inObj == null ? (inObj).toString() :
+      class2type[toString.call(inObj)] || OBJECT;
   };
 
   if (typeof module !== 'undefined' && module.exports) {
